@@ -1,0 +1,6 @@
+.root {
+    width: 2px;
+    height: 2px;
+    border: solid black 2px;
+    border-radius: 50%;
+}

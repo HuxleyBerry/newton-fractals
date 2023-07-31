@@ -268,14 +268,15 @@ magnitudeSlider.oninput = function () {
 
 function update() {
     fineness = (Math.pow(2, finenessSlider.value)) * (20 / width);
+    console.log(fineness);
     pixelSize = 8 * sizeSlider.value / Math.pow(2, finenessSlider.value);
+    console.log(pixelSize);
     info.style.left = width * fineness * pixelSize * 1.1 + "px";
     drawFractal();
 };
 
 function extendedUpdate() {
     generalizationConstant = [1 + magnitudeSlider.value * 0.01 * Math.cos(Math.PI * angleSlider.value / 180), magnitudeSlider.value * 0.01 * Math.sin(Math.PI * angleSlider.value / 180)];
-    console.log(generalizationConstant);
     drawFractal();
 };
 
@@ -317,16 +318,12 @@ function drawRoots() {
         if (roots[i][0] < x + width && roots[i][1] < y + width) {
             let newRoot = document.createElement("div");
             newRoot.style.position = "absolute";
-            newRoot.style.width = "2px";
-            newRoot.style.height = "2px";
+            newRoot.className = "root";
             rootsDiv.appendChild(newRoot);
             rootElements.push(newRoot);
             newRoot.style.left = (roots[i][0] - x) * fineness * pixelSize + "px";
             newRoot.style.top = (roots[i][1] - y) * fineness * pixelSize + "px";
             newRoot.style.backgroundColor = colours[i];
-            newRoot.style.borderRadius = "1px";
-            newRoot.style.border = "solid";
-            newRoot.style.borderColor = "black";
         }
     }
 }
