@@ -4,12 +4,11 @@ let colours = ["rgb(255, 179, 0)", "rgb(128, 62, 117)", "rgb(255, 104, 0)", "rgb
 let x = -10;
 let y = -10;
 let width = 20; //also height
-let fineness = 8;
-let pixelSize = 2;
+let fineness = 24;
+let pixelSize = 1;
 
 const iters = 100; //maximum iterations used of Newton's method
 const prec = 0.05; //precision
-
 
 //the polynomial roots
 let roots = [[2, 2], [2, -2], [-2, -2], [-2, 2]];
@@ -18,12 +17,12 @@ let generalizationConstant = [1, 0];
 
 let isRootSelected = false;
 let selectedRoot;
-let zoomSpeed = 2; //The factor by which the view changes when the mouse wheel is scrolled
+const zoomSpeed = 2; //The factor by which the view changes when the mouse wheel is scrolled
 
 let polynomialCoefficients = [];
 let derivativeCoefficients = [];
 
-let equationDisplayPrecision = 3; //number of decimal places
+const equationDisplayPrecision = 3; //number of decimal places
 
 function randomRoots(deg) {
     roots = [];
@@ -233,11 +232,11 @@ const poly1 = document.getElementById("poly1");
 const poly2 = document.getElementById("poly2");
 const mouseCoordsText = document.getElementById("mousecoords");
 const finenessSlider = document.getElementById("fineness-slider");
-finenessSlider.value = 3;
+finenessSlider.value = 24;
 const finenessText = document.getElementById("fineness-text");
 const finenessButton = document.getElementById("fineness-button");
 const sizeSlider = document.getElementById("size-slider");
-sizeSlider.value = 2;
+sizeSlider.value = 1;
 const sizeText = document.getElementById("size-text");
 const rootsDiv = document.getElementById("roots-div");
 const coloursButton = document.getElementById("colours-button");
@@ -251,7 +250,7 @@ angleSlider.value = 0;
 const extendedButton = document.getElementById("extended-button");
 
 finenessSlider.oninput = () => {
-    finenessText.textContent = "Resolution: " + Math.pow(2, finenessSlider.value);
+    finenessText.textContent = "Resolution: " + finenessSlider.value;
 };
 newFractalSlider.oninput = () => {
     newFractalText.textContent = "Degree: " + newFractalSlider.value;
@@ -262,15 +261,13 @@ sizeSlider.oninput = () => {
 angleSlider.oninput = () => {
     angleText.textContent = "Angle: " + angleSlider.value + "°";
 };
-magnitudeSlider.oninput = function () {
+magnitudeSlider.oninput = () => {
     magnitudeText.textContent = "Magnitude: " + (0.01 * magnitudeSlider.value).toFixed(2);
 };
 
 function update() {
-    fineness = (Math.pow(2, finenessSlider.value)) * (20 / width);
-    console.log(fineness);
-    pixelSize = 8 * sizeSlider.value / Math.pow(2, finenessSlider.value);
-    console.log(pixelSize);
+    fineness = finenessSlider.value * (20 / width);
+    pixelSize = sizeSlider.value;
     info.style.left = width * fineness * pixelSize * 1.1 + "px";
     drawFractal();
 };
